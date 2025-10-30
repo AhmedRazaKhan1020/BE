@@ -5,6 +5,12 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 dotenv.config();
 
@@ -20,6 +26,8 @@ app.use('/auth', authRoutes);
 app.use('/income', incomeRoutes);
 app.use('/expense', expenseRoutes);
 
+// Static folder for uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // MongoDB connection
 mongoose.connect(process.env.URL)
